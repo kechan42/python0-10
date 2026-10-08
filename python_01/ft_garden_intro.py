@@ -1,0 +1,8 @@
+print("=== Welcome to My Garden ===")
+p_name: str = str(input("Plant: "))
+p_height: str = str(input("Height: "))
+p_age: str = str(input("Age: "))
+print(f"Plant:{p_name}")
+print(f"Plant:{p_height}")
+print(f"Plant:{p_age}")
+print("===End of Program===")
