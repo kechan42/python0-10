@@ -85,8 +85,6 @@ class Plant:
         def increment_show_c(self) -> None:
             self.__show_c += 1
 
-        def show(self) -> None:
-            increment_show_c(s)
 
         def display_counts(self) -> None:
             print(f"[Statistics for {self.name}]")
@@ -104,13 +102,14 @@ class Flower(Plant):
         print(f"[asking the {self.name} to bloom]")
         if (self._bloomed is False):
             self._bloomed = True
-            print(f"{self.name} is blooming beautifully!")
 
     def show(self):
         super().show()
-        print(f"Color: {self.color}")
+        print(f" Color: {self.color}")
         if (self._bloomed != True):
-            print(f"{self.name} has not bloomed yet")
+            print(f" {self.name} has not bloomed yet")
+        else:
+            print(f" {self.name} is blooming beautifully!")
 
 
 class Seed(Flower):
@@ -129,7 +128,7 @@ class Seed(Flower):
 
     def show(self):
         super().show()
-        print(f"Seeds: {self.seeds}")
+        print(f" Seeds: {self.seeds}")
 
 class Tree(Plant):
     def __init__(self, name: str, height: float,
@@ -146,6 +145,26 @@ class Tree(Plant):
         print(f"[asking the {self.name} to produce shade]")
         print(f"Tree {self.name} now produces a shade of", end='')
         print(f" {x}cm long and {self.trunk_diameter}cm wide.")
+
+    class Stats(Plant.Stats):
+        def __init__(self, name) -> None:
+            self.name = name
+            self.__grow_c: int = 0
+            self.__age_c: int = 0
+            self.__show_c: int = 0
+            self.__shade_c: int = 0
+
+        def get_shade_c(self) -> int:
+            return self.__shade_c
+
+        def increment_shade_c(self) -> None:
+            self.__shade_c += 1
+
+        def display_counts(self) -> None:
+            print(f"[Statistics for {self.name}]")
+            print(f"Stats: {self.get_grow_c()} grow, ", end='')
+            print(f"{self.get_age_c()} count, {self.get_show_c()} show,", end='')
+            print(f" {self.get_shade_c()} shade")
 
 
 class Vegetable(Plant):
@@ -179,25 +198,39 @@ print(f"is 60 days older than a year-> {Plant.year_old(60)}")
 print(f"is 500 days older than a year-> {Plant.year_old(500)}")
 
 print("\n=== Flower")
-p1 = Flower("Rose", 15, 0.1, 365, "red", False)
+p1 = Flower("Rose", 15, 0.1, 15, "red", False)
 p1_s = p1.Stats("Rose")
 p1.show()
+p1_s.increment_show_c()
+show_stats(p1_s)
+p1_s.increment_grow_c()
 p1.bloom()
+p1.grow()
+p1.show()
+p1_s.increment_show_c()
 show_stats(p1_s)
 
 print("\n=== Tree")
 p2 = Tree("Oak", 200.0, 0.01, 365, 5.0)
-p2.show()
-p2.produce_shade()
-p2.show()
 p2_s = p2.Stats("Oak")
+p2.show()
+p2_s.increment_show_c()
+show_stats(p2_s)
+p2.produce_shade()
+p2_s.increment_shade_c()
 show_stats(p2_s)
 
 print("\n=== Seed")
-p3 = Seed("Rose", 15, 0.1, 365, "red", False)
+p3 = Seed("Sunflower", 80, 0.1, 45, "yellow", False)
+p3_s = p3.Stats("Sunflower")
 p3.show()
+p3_s.increment_show_c()
 p3.bloom()
+p3.grow()
+p3.age()
 p3.show()
+p3_s.increment_show_c()
+show_stats(p3_s)
 
 print("\n=== Anonymous")
 p4 = Plant.anon_plant()
